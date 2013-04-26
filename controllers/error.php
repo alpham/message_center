@@ -1,24 +1,20 @@
 <?php
 
-
-
 /**
  * Error
- *  * controls Errors 
+ *  * controls Errors
  */
 class Error extends Controller {
-	    
-	
-	function __construct($errorNo,$details = "") {
-	    parent::__construct();
-        $this->db->setTable('errors');
-        $this->db->setCondition( 'id = ' . $this->db->quote($errorNo) );
-        $result = $this->db->getResult();
-        // print_r($result) ;
-        $this->view->errorString = $result['0']['string'] . " : " . $details.". ";
-        $this->view->renderPage("error/error");
-	}
+
+    function __construct($errorNo, $details = "") {
+        parent::__construct();
+        require 'models/error.php';
+        $errorModel = new ErrorModel($errorNo);
+        $result = $errorModel -> getResult();
+        $this -> view -> errorType = $result['0']['type'];
+        $this -> view -> errorString = $result['0']['string'] . " : " . $details . ". ";
+        $this -> view -> renderError();
+    }
+
 }
-
-
 ?>

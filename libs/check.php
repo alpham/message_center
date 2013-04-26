@@ -14,7 +14,7 @@ class Check {
         if (isset($_SESSION['id'])) {
             return TRUE;
         } else {
-            return TRUE; // ** change to false 
+            return TRUE; 
         }
 
     }
