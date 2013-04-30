@@ -1,0 +1,18 @@
+Project name : MESSAGE CENTER
+Author : Ahmed Magdy Mahmoud.
+Copyrights : Ahmed.Magdy40@gmail.com (2013).
+
+Definition : 
+message center is a small and closed message system, only support offline messages to only registered users (NON-email).
+
+Features : 
+* graphical emotions support.
+* easy to change your theme (change theme folder-name in settings(theme) column in the database.
+
+Installation :
+
+1 - To install MESSAGE CENTER you need a new database so first create a database.
+2 - Import /config/database_structure.sql to your database.
+3 - Go to /config/database.php and change database parameters with you database information.
+4 - Go to /config/paths.php and define the ABSOLUTE_PATH with the ABSOLUTE_PATH of your application.
+5 - Now you can check message center out :)

@@ -1,0 +1,91 @@
+#error {
+	visibility: hidden;
+}
+
+.errorPlace {
+	position: fixed;
+}
+
+.toolbar {
+	background-color: #000000;
+	color: #FFFFFF;
+}
+
+.sidebar {
+	/*position: fixed;*/
+	height: 473px;
+}
+
+.scroll-area {
+	overflow: auto;
+	height: 473px;
+	border: 1px rgb(221, 221, 221) solid;
+	border-radius: 5px;
+}
+
+.table-parent {
+	padding: 0px;
+}
+.table-chlid {
+	margin: 0px;
+}
+
+.small-cell {
+	width: 20%;
+}
+.body-cell {
+	width: 80%;
+}
+.body-cell {
+	color: #aaa;
+	text-shadow: 0px 0px 2px rgb(255, 255, 255);
+	font-size: 12px;
+}
+
+.title-cell {
+	font-weight: bold;
+}
+.title-cell:hover a {
+	color: rgb(0, 136, 204);
+	text-shadow: 0px 0px 5px rgb(76, 125, 184);
+}
+
+.search-box {
+	margin: 25px;
+}
+
+.message-area {
+	padding: 10px;
+}
+
+.message-title {
+	font-weight: bold;
+	font-size: 20px;
+	color: rgb(0, 136, 204);
+}
+
+.message-title:hover {
+	color: rgb(0, 136, 204);
+	text-shadow: 0px 0px 5px rgb(76, 125, 184);
+}
+
+.message-body {
+	margin-left: 15px;
+}
+
+.footer {
+	margin-left: 50px;
+}
+
+.compose-button {
+	margin: 10px;
+}
+
+textarea {
+	width: 750px;
+	height: 245px;
+}
+
+.compose {
+	margin: 20px;
+}

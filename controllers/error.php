@@ -8,7 +8,7 @@ class Error extends Controller {
 
     function __construct($errorNo, $details = "") {
         parent::__construct();
-        require 'models/error.php';
+        require_once 'models/error.php';
         $errorModel = new ErrorModel($errorNo);
         $result = $errorModel -> getResult();
         $this -> view -> errorType = $result['0']['type'];

@@ -5,16 +5,20 @@
  *  * describe the database as an sub-object in our system
  */
 class Database extends PDO {
+
     private $table, $condition;
+
     function __construct() {
-        $this -> table = '';
-        $this -> condition = '';
+        $this->table = '';
+        $this->condition = '';
 
         parent::__construct(DB_DEVICE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
+        $sSQL = 'SET CHARACTER utf8';
+        $this->exec($sSQL);
     }
 
     public function setTable($table) {
-        $this -> table = $table;
+        $this->table = $table;
     }
 
     /*
@@ -25,50 +29,61 @@ class Database extends PDO {
      * * NEVER pass arguments directly from the user ($_GET OR $_POST OR $_COOKIES)
      *
      * */
+
     public function setCondition($cond) {
-        $this -> condition = $cond;
+        $this->condition = $cond;
     }
 
     public function getResult($query = NULL, $command = "SELECT") {
         if ($query === NULL) {
             if ($command == "SELECT") {
-                $sql = "SELECT * FROM " . $this -> table . " WHERE " . $this -> condition . " ;";
-                $sSQL = 'SET CHARACTER SET utf8';
-                $this -> exec($sSQL);
-                $stm = $this -> query($sql);
+                $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->condition . " ;";
+                $sSQL = 'SET CHARACTER utf8';
+                $this->exec($sSQL);
+                $stm = $this->query($sql);
                 // $stm -> execute(array(":condition" => $this -> condition, ":table" => $this -> table));
                 // print_r ($stm -> fetchAll());
                 // echo $this->condition . $this->table;
-                return $stm -> fetchAll();
+                
+                return !empty($stm) ? $stm->fetchAll() : FALSE ;
             } else if ($command == "DELETE") {
-                $sql = "DELETE FROM " . $this -> table . " WHERE " . $this -> condition . " ;";
-                $sSQL = 'SET CHARACTER SET utf8';
-                $this -> exec($sSQL);
-                $stm = $this -> query($sql);
-                $result = $stm -> rowCount() . "rows deleted.";
+                $sql = "DELETE FROM " . $this->table . " WHERE " . $this->condition . " ;";
+                $sSQL = 'SET CHARACTER utf8';
+                $this->exec($sSQL);
+                $stm = $this->query($sql);
+                $result = $stm->rowCount() . "rows deleted.";
                 return $result;
-
             }
         } else {
-            $sSQL = 'SET CHARACTER SET utf8';
-            $this -> exec($sSQL);
-            $stm = $this -> query($query);
-            return $stm -> fetchAll();
+            $sSQL = 'SET CHARACTER utf8';
+            $this->exec($sSQL);
+            $stm = $this->query($query);
+            return $stm->fetchAll();
         }
     }
 
     public function getId($id, $table = Null) {
         if (isset($table) && !empty($table)) {
-            $this -> setCondition(" id = " . $id);
+            $this->setCondition(" id = " . $id);
 
-            $result = $this -> getResult("SELECT");
+            $result = $this->getResult("SELECT");
             return $result;
         } else {
-            $curTable = $this -> table;
-            $this -> table = $table;
-            $result = $this -> getResult("SELECT");
+            $curTable = $this->table;
+            $this->table = $table;
+            $result = $this->getResult("SELECT");
         }
     }
 
+    public function countDb() {
+        $sql = "SELECT COUNT(*) FROM " . $this->table . " WHERE " . $this->condition . " ;";
+        $sSQL = 'SET CHARACTER utf8';
+        $this->exec($sSQL);
+        $stm = $this->query($sql);
+        $stm=$stm->fetchColumn();
+        return $stm;
+    }
+
 }
+
 ?>

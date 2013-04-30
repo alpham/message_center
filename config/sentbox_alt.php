@@ -1,0 +1,1 @@
+you have not sent any messages yet .. <a href="<?php require_once 'paths.php';echo ABSOLUTE_PATH; ?>mail/compose" class="btn btn-small btn-success">try send one now..</a>

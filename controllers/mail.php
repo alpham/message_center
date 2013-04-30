@@ -11,17 +11,47 @@ class Mail extends Controller {
         $this -> redirect();
         require 'models/message.php';
         $this -> messages = new Message();
+        if (isset($_POST['send'])) {
+            if (empty($_POST['to'])) {
+                $err = new Error(8, "message destination is not defined !!");
+                return FALSE;
+            } else if (empty($_POST['subject'])) {
+                $err = new Error(8, "message subject is not defined !!");
+                return FALSE;
+            } else {
+                if ($this -> messages -> send($_POST)) {
+                    $err = new Error(9, "message has been successfully delivered :)");
+                    return FALSE;
+                }
+            }
+        }
+    }
 
+    public function compose() {
+        $this -> view -> page = "compose";
+        $this -> redirect();
+        $this -> view -> renderPage("mail/compose");
     }
 
     public function render() {
         $this -> view -> renderPage("main/index");
     }
 
+    public function search($messageID = 0) {
+        $this -> redirect();
+        if (!$messageID > 0) {
+            $this -> view -> page = "search";
+            $this -> view -> renderPage("mail/search");
+        } else {
+            $this -> loadMessage($messageID);
+        }
+
+    }
+
     public function inbox($messageID = 0) {
+        $this -> redirect();
         if (!$messageID > 0) {
             $this -> view -> page = "inbox";
-            $this -> redirect();
             $this -> view -> renderPage("mail/inbox");
         } else {
             $this -> loadMessage($messageID);
@@ -30,9 +60,9 @@ class Mail extends Controller {
     }
 
     public function sentbox($messageID = 0) {
+        $this -> redirect();
         if (!$messageID > 0) {
             $this -> view -> page = "sentbox";
-            $this -> redirect();
             $this -> view -> renderPage("mail/sentbox");
         } else {
             $this -> loadMessage($messageID);
@@ -41,9 +71,9 @@ class Mail extends Controller {
     }
 
     public function trash($messageID = 0) {
+        $this -> redirect();
         if (!$messageID > 0) {
             $this -> view -> page = "trash";
-            $this -> redirect();
             $this -> view -> renderPage("mail/trash");
         } else {
             $this -> loadMessage($messageID);
@@ -52,15 +82,14 @@ class Mail extends Controller {
     }
 
     public function redirect() {
-        if (!$this -> check -> checkLog()) {
-            header("location:" . ABSOLUTE_PATH . "login/");
+        if (!Login::isActive()) {
+            header("location:" . ABSOLUTE_PATH . "iuylogin");
         }
     }
-    
-    private function loadMessage($messageID)
-    {
+
+    private function loadMessage($messageID) {
         $msg = new Message($messageID);
-        return $msg->getMessageById($messageID);
+        return $msg -> getMessageById($messageID);
     }
 
 }
